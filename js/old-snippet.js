@@ -95,6 +95,8 @@
         }
     };
 
+	window.openChat = openChat;   
+
     var keepOpenedState = function(opened) {
         if(opened) {
             window.sessionStorage.setItem("sp-chat-snippet", "true");
@@ -399,7 +401,7 @@
 
         var cw = $('#sp-chat-widget');
         cw.css("display", "block");
-        $('#sp-chat-label-text').text(a ? "Chat with us. We are online!" : "Sorry. We are offline.");
+        $('#sp-chat-label-text').text(a ? "Welcome to Humanify Chat!" : "Sorry. We are offline.");
         $('#sp-offline-label').css("display", a ? "none" : "block");
         $('#sp-online-label').css("display", a ? "block" : "none");
 
@@ -408,9 +410,19 @@
             cw.bind('click', function() {
                 openChat(true);
             });
-            if(window.sessionStorage.getItem("sp-chat-snippet")) {
-                openChat(true);
-            }
+            if (SERVICE_PATTERN_CHAT_CONFIG.autostart == true)
+            {
+            	openChat(true);
+            	
+            }else
+            	if(window.sessionStorage.getItem("sp-chat-snippet")) {
+              		 openChat(true);
+              		 }
+              	if (SERVICE_PATTERN_CHAT_CONFIG.autostartpages != null &&
+              	 (-1 != SERVICE_PATTERN_CHAT_CONFIG.autostartpages.indexOf(window.location.href)))
+              	{
+              		openChat(true);
+              	}	 
         } else {
             cw.css("cursor", "default");
             cw.unbind('click');
