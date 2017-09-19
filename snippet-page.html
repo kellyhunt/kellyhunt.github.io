@@ -1,42 +1,20 @@
-<!DOCTYPE html>
 
-<!-- ___PRODUCT_BUILD___ (___PRODUCT_COMMENTS___) ___PRODUCT_DATE___ -->
-
-<html>
-<head>
-    <title>Chat Test Page</title>
-</head>
-<body>
-
-<!-- You have to put this piece of JavaScript code into your web page -->
 
 <script type="text/javascript">
     SERVICE_PATTERN_CHAT_CONFIG = {
-        appId: '123',                   /* Unique identifier of Mobile/Web record of Portal Tenant Management   */
+        appId: 'c042b6bab5e2469883f688d5b96bc3a2',                   /* Unique identifier of Mobile/Web record of Portal Tenant Management   */
         clientId: 'WebChat',            /* no need to change this */
-        apiUrl: '/clientweb/api/v1',    /* path to public API can be absolute like http://example.brightpattern.com:98/clientweb/api/v1 or relative*/
-        tenantUrl: 'example.com',
+        apiUrl: 'https://supporttest.brightpattern.com:443/clientweb/api/v1',    /* path to public API can be absolute like http://example.brightpattern.com:98/clientweb/api/v1 or relative*/
+        tenantUrl: 'supporttest.brightpattern.com',
         width: 300,                     /* chat width */
-        chatPath: '',                    /* relative path to client-chat-page.html i.e empty here because snippet-page.html and client-chat-page.html in same directory */
-        
-        /* Default customer data, it can be collected on current site's context*/
-        /* Customer data also can be requested via "Request Input" block + "MobileChatCustomerData" formName */
-/*
-        togetherJS_enabled : true,
-        first_name: '',
-        last_name: '',
-        from: '',
-        email: '',
-        account_number: '',
-        phone_number: 91001,
-        location : {
-            latitude: 37.5151481,
-            longitude: -122.4183997
-        }
-*/
+        chatPath: 'C://Users/kc.reben/Downloads/ts_webchat',                    /* relative path to client-chat-page.html i.e empty here because snippet-page.html and client-chat-page.html in same directory */
+        hidden: false,
+        sound_notification: false,
+        logging: false,
+        sound_notification_file: 'https://supporttest.brightpattern.com:443/clientweb/chat-client-v2/media/ding.mp3'
 
     };
 </script>
-<script type="text/javascript" src="js/snippet.js"></script>
+<script type="text/javascript" src="C:/Users/kc.reben/Downloads/ts_webchat/js/snippet.js"></script>
 </body>
 </html>
