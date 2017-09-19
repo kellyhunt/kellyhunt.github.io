@@ -11,8 +11,6 @@
 
 <link href="css/wrong.css" rel="stylesheet" type="text/css">
 <link href="css/override.css" rel="stylesheet" type="text/css">
-<link href="css/font-awesome.min.css" rel="stylesheet">
-<link href="emoji/css/emoji.css" rel="stylesheet">
 <!--link href="js/perfect-scrollbar/perfect-scrollbar.min.css" rel="stylesheet" type="text/css"-->
 
 <script type="text/javascript" src="js/json2.min.js"></script>
@@ -24,11 +22,6 @@
 <script type="text/javascript" src="js/jquery-ui-1.11.1.min.js"></script>
 <script type="text/javascript" src="js/client-chat-ui.js"></script>
 <script type="text/javascript" src="js/autosize.min.js"></script>
-<script type="text/javascript" src="js/platform.js"></script>
-<script type="text/javascript" src="emoji/js/config.js"></script>
-<script type="text/javascript" src="emoji/js/util.js"></script>
-<script type="text/javascript" src="emoji/js/jquery.emojiarea.js"></script>
-<script type="text/javascript" src="emoji/js/emoji-picker.js"></script>
 <script type="text/javascript"> (function(){    
 
     var cp = {};
@@ -205,7 +198,7 @@
                         }
                     });
                 }
-                window.setTimeout(function() {autosize($('#input-field,.emoji-wysiwyg-editor'));}, 400);
+                window.setTimeout(function() {autosize($('#input-field'));}, 400);
             },
             onHide: function() {
                 window.chatSession.sessionStatus = undefined;
@@ -325,7 +318,7 @@
                 $('#chat-body').css("display", "none");
                 $('#video').css("display", "none");
                 $('#servicepattern-chat').css('top', '0');
-                $('#callme').css("display", "none");
+            /*    $('#callme').css("display", "none");  */
                 $('#shareScreen').css("display", "none");
                 $('#agent-title').text("");
                 $('.avatar-image').attr("src", 'images/logo-big.png');
@@ -431,97 +424,85 @@
         }
     };
 
-    var getConnectRequestData = function() {
-        return {
-            crossDomain : true,
-            clientId    : 'WebChat',
-            url         : cp.webServer,
-            appId       : cp.appId,
-            tenantUrl   : cp.tenantUrl,
-            from        : cp.from,
-            phone_number: cp.phone_number,
-            parameters  : cp.parameters || {}
-        }
-    };
 
     var connect = function() {
-
-        $.chat.createSession(getConnectRequestData())
-
-            .fail(function (e) {
-                $('#error').text(e.text + ". Retrying...");
+        $.chat.createSession({
+            url: cp.webServer,
+            crossDomain: true,
+            tenantUrl: cp.tenantUrl,
+            appId: cp.appId,
+            clientId: 'WebChat',
+            phone_number: cp.phone_number,
+			from: cp.from,
+            parameters: cp.parameters || {}
+        }).fail(function(e) {
+                    $('#error').text(e.text + ". Retrying...");
 //            $('#error').css('display', 'block');
-                window.setTimeout(connect, 4000);
-            })
+                    window.setTimeout(connect, 4000);
+                }).done(function(o) {
+                    $('#error').css('display', 'none');
+                    window.sessionStorage.setItem("sp-chat-session", o.session.sessionId);
 
-            .done(function (session){
-                onConnected(session);
-            });
-    };
-
-    var onConnected = function (o) {
-        $('#error').css('display', 'none');
-        window.sessionStorage.setItem("sp-chat-session", o.session.sessionId);
-
-        showForm('start_form', '');
-        initDragAndDrop();
-        o.session.assignUICallbacks({
-            onFormShow: function(f) { showForm(f.form_name, f.form_request_id); },
-            onChatConnected: function() { showForm('connect_chat_form', ''); },
-            onChatQueued: function() { showForm('find_agent_form', ''); },
-            onFormSent: function () {
-                if(o.session.sessionStatus) {
-                    switch(o.session.sessionStatus) {
-                        case 'queued':
-                            showForm('find_agent_form', '');
-                            break;
-                        case 'connected':
-                            showForm('connect_chat_form', '');
-                            break;
-                    }
-                } else {
                     showForm('start_form', '');
-                }
-            },
-            onLogEvent: function(event) {
-                $.chatUI.appendLog(event);
-                updateScrollbar();
-            },
-            onSessionEnded: function() {
-                if(!o.is_new_chat && !o.session.historyReceived) {
-                    /*history has not been received, we should connect again*/
-                    connect();
-                } else {
-                    if(o.session.sessionStatus) {
-                        o.session.sessionStatus = undefined;
-                        //the session is ended, but there is no party
-                        //it occurs when no agent available, no need to close chat
-                        //there is some messages, chat closed bu customer
+                    initDragAndDrop();
+                    o.session.assignUICallbacks({
+                        onFormShow: function(f) { showForm(f.form_name, f.form_request_id); },
+                        onChatConnected: function() { showForm('connect_chat_form', ''); },
+                        onChatQueued: function() { showForm('find_agent_form', ''); },
+                        onFormSent: function () {
+                            if(o.session.sessionStatus) {
+                                switch(o.session.sessionStatus) {
+                                    case 'queued':
+                                        showForm('find_agent_form', '');
+                                        break;
+                                    case 'connected':
+                                        showForm('connect_chat_form', '');
+                                        break;
+                                }
+                            } else {
+                                showForm('start_form', '');
+                            }
+                        },
+                        onLogEvent: function(event) {
+                            $.chatUI.appendLog(event);
+                            updateScrollbar();
+                        },
+                        onSessionEnded: function() {
+                            if(!o.is_new_chat && !o.session.historyReceived) {
+                                /*history has not been received, we should connect again*/
+                                connect();
+                            } else {
+                                if(o.session.sessionStatus) {
+                                    o.session.sessionStatus = undefined;
+                                    //the session is ended, but there is no party
+                                    //it occurs when no agent available, no need to close chat
+                                    //there is some messages, chat closed bu customer
 
-                        $('#callme').css("display", "none");
-                        $('#chat-body').addClass("sp-readonly");
-                        $('#agent-name').text("Session completed");
-                        $('.avatar-image').attr("src", 'images/logo-big.png');
-                        $('#agent-title').text("");
-                        updateScrollbar();
-                        return;
-                    }
-                    if(mobileCheck()) {
-                        window.location.replace(getUrlVars(window.location.href)['referrer']);
-                    } else {
-                        window.setTimeout(function() {
-                            window.parent.postMessage("sp-session-end", "*");
-                        }, 50);
-                    }
-                }
-            }});
+                                    $('#callme').css("display", "none");
+                                    $('#chat-body').addClass("sp-readonly");
+                                    $('#agent-name').text("Session completed");
+                                    $('.avatar-image').attr("src", 'images/logo-big.png');
+                                    $('#agent-title').text("");
+                                    updateScrollbar();
+                                    return;
+                                }
+                                if(mobileCheck()) {
+                                    window.location.replace(getUrlVars(window.location.href)['referrer']);
+                                } else {
+                                    window.setTimeout(function() {
+                                        window.parent.postMessage("sp-session-end", "*");
+                                    }, 50);
+                                }
+                            }
+                        }});
 
-        if (!o.is_new_chat) {
-            o.session.getHistory();
-        }
-        window.chatSession = o.session;
-        var urlVars = getUrlVars(window.location.href);
-        $.chatUI.sendNavigation(o.session, urlVars['referrer'], urlVars['referrerTitle']);
+                    if (!o.is_new_chat) {
+                        o.session.getHistory();
+                    }
+                    window.chatSession = o.session;
+                    var urlVars = getUrlVars(window.location.href); 
+                    $.chatUI.sendNavigation(o.session, urlVars['referrer'], urlVars['referrerTitle']);
+                });
     };
 
     var uploadFile = function(file) {
@@ -608,19 +589,6 @@
 
     $.support.cors = true;
     $(document).ready(function() {
-	
-		// Initializes and creates emoji set from sprite sheet
-		window.emojiPicker = new EmojiPicker({
-		  emojiable_selector: '[data-emojiable=true]',
-		  assetsPath: 'emoji/img/',
-		  popupButtonClasses: 'fa fa-smile-o'
-		});
-		// Finds all elements with `emojiable_selector` and converts them to rich emoji input fields
-		// You may want to delay this step if you have dynamically created input fields that appear later in the loading process
-		// It can be called as many times as necessary; previously converted input fields will not be converted again
-		window.emojiPicker.discover();
-
-	
         var args = getUrlVars(window.location.href);
         for (var arg in args) if (args.hasOwnProperty(arg)) {
             cp[arg] = args[arg];
@@ -646,11 +614,8 @@
         cp.parameters.location         = {};
         cp.parameters.location.latitude = cp.latitude;
         cp.parameters.location.longitude = cp.longitude;
-        
-        cp.parameters.user_platform = {};
-        cp.parameters.user_platform.browser = platform.name + " " + platform.version;
-        cp.parameters.user_platform.os = platform.os.toString();
-        cp.parameters.user_platform.description = platform.description;        
+
+        connect();
 
         $('#servicepattern_close_button').bind('click', function() {
             safeEndSession();
@@ -698,30 +663,11 @@
             window.chatSession.sendFormData(currentFormRequestId, currentFormName, extChatData);
         });
 
-        $('#input-field').bind('keyup', function(event) {
+        $('#input-field').bind('keypress', function(event) {
             $.chatUI.msgKeyPress(event, window.chatSession);
         });
 
         $('#input-field').bind('blur', function(event) {
-            $.chatUI.notTyping(window.chatSession);
-        });
-
-        $('body').on('keyup', '.emoji-wysiwyg-editor', function (event) {
-            $.chatUI.msgKeyPress(event, window.chatSession);
-        });
-
-        $('body').on('keyup', '.emoji-wysiwyg-editor', function () {
-            $('#input-field').val($('.emoji-wysiwyg-editor').text());
-            var h=$('.emoji-wysiwyg-editor').height()+12
-            if($('.emoji-wysiwyg-editor').prop("scrollHeight")==h){
-                $('.emoji-wysiwyg-editor').height(17);
-            }
-            $('.emoji-wysiwyg-editor').height($('.emoji-wysiwyg-editor').prop("scrollHeight")-14);
-            var bottom = $('.emoji-wysiwyg-editor').height() + 25;
-            $('#messages-div').css("bottom",bottom+"px");
-        });
-
-        $('body').on('blur', '.emoji-wysiwyg-editor', function () {
             $.chatUI.notTyping(window.chatSession);
         });
 
@@ -823,22 +769,6 @@
             });
             $('#attach-file').click();
         });
-
-
-        var sessionId = window.sessionStorage.getItem("sp-chat-session");
-        if(sessionId) {
-            $.chat.checkSessionExists(getConnectRequestData(), sessionId)
-
-                .fail(function() {
-                    connect();
-                })
-
-                .done(function() {
-                    onConnected($.chat.buildSessionFromSessionId(getConnectRequestData(), sessionId, '?'))
-                });
-        } else {
-            connect();
-        }
     });
 })();    
 </script>    
@@ -897,18 +827,18 @@
                 <div class="description">Please fill the following information:</div>
 
                 <div class="field-wrapper">
-                    <input id="first_name" type="text" class="input-field" name="first_name" placeholder="First name*" value="">
-                    <div id="error-first_name" class="error-balloon">Please, enter first name</div>
+                    <input id="first_name" type="text" class="input-field" name="first_name" placeholder="Full name*" value="">
+                    <div id="error-first_name" class="error-balloon">Please, enter your full name</div>
                 </div>
 
-                <div class="field-wrapper">
+                <!--div class="field-wrapper">
                     <input id="last_name" type="text" class="input-field" name="last_name" placeholder="Last name*" value="">
                     <div id="error-last_name" class="error-balloon">Please, enter last name</div>
-                </div>
+                </div-->
 
                 <div class="field-wrapper">
-                    <input id="account_number" type="text" class="input-field" placeholder="Account id" value="">
-                    <div id="error-account_number" class="error-balloon">Please, enter account number</div>
+                    <input id="account_number" type="text" class="input-field" placeholder="Your Mastercode" value="">
+                    <div id="error-account_number" class="error-balloon">Please, enter your mastercode</div>
                 </div>
 
                 <div class="field-wrapper">
@@ -1042,7 +972,7 @@
             <div class="input-div-table">
                 <div id="attachFile"></div>				
                 <div class="td-textarea">
-                    <textarea id="input-field" data-emojiable="true" rows="1" name="input-field" maxlength="1000" placeholder="Type here and hit <Enter>" autocomplete="off" style="resize: none;"></textarea>
+                    <textarea id="input-field" rows="1" name="input-field" maxlength="1000" placeholder="Type here and hit <Enter>" autocomplete="off" style="resize: none;"></textarea>
                 </div>
                 <div class="td-button">
                     <input id="input-button" type="button" value="Send" class="servicepatternBtn accept">
@@ -1052,6 +982,8 @@
     </div>
 </div>
 <form name="file-upload-form" id="file-upload-form" target="_blank" method="post" enctype="multipart/form-data" style="display:none;">
+
 </form>
+
 </body>
 </html>

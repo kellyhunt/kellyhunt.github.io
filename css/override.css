@@ -6,24 +6,13 @@ html {
 
 #attachFile {
     position: absolute;
-    left: 10px;
-    top: 5px;
+    left: 16px;
+    top: 11px;
     width: 20px;
     height: 20px;
     z-index: 20;
     cursor: pointer;
-    background: url(../images/attach.png) center center no-repeat;
-}
-
-#attachSmile {
-    position: absolute;
-    left: 30px;
-    top: 10px;
-    width: 20px;
-    height: 20px;
-    z-index: 20;
-    cursor: pointer;
-    background: url(../images/smile.png) center center no-repeat;
+    background: url(../images/attach.png) 3px 2px no-repeat;
 }
 
 .sp-readonly #input-div {
@@ -35,11 +24,10 @@ html {
 
 #inner-chat.mobile-version #input-div #attachFile {
     left: 0;
-    top: 2px;
+    top: 0;
     width: 35px;
     height: 30px;
     background: url(../images/attach.png) 20px center no-repeat;
-    position:relative;
 }
 
 #inner-chat.mobile-version #input-div.input-div-iphone #attachFile {
@@ -48,22 +36,6 @@ html {
     left:0;
     top: 0;
     background: url(../images/attach.png) center no-repeat;
-}
-
-#inner-chat.mobile-version #input-div #attachSmile {
-    left: 0;
-    top: 0;
-    width: 35px;
-    height: 30px;
-    background: url(../images/smile.png) 20px center no-repeat;
-}
-
-#inner-chat.mobile-version #input-div.input-div-iphone #attachSmile {
-    width: 40px;
-    height: 40px;
-    left:0;
-    top: 0;
-    background: url(../images/smile.png) center no-repeat;
 }
 
 #offline-form .description.small {
@@ -86,7 +58,7 @@ html {
 }
 
 #input-field {
-    padding-left: 45px;
+    padding-left: 25px;
     box-sizing: border-box;
     width: 262px;
     height: 29px;
@@ -258,50 +230,4 @@ html {
     background: white;
 }
 
-.emoji-menu{
-    bottom:50px;
-    right:auto!important;
-    left:10px;
-}
 
-.emoji-wysiwyg-editor{
-    padding: 6px 18px 6px 45px!important;
-    box-sizing: border-box;
-    border: solid 1px #a8a8a9!important;
-    outline: 0;
-    color: #000!important;
-    -webkit-border-radius: 5px 5px 5px 5px!important;
-    -khtml-border-radius: 5px 5px 5px 5px!important;
-    -moz-border-radius: 5px 5px 5px 5px!important;
-    -ms-border-radius: 5px 5px 5px 5px!important;
-    -o-border-radius: 5px 5px 5px 5px!important;
-    border-radius: 5px 5px 5px 5px!important;
-    left:9px!important;
-    width:262px!important;
-    position: relative;
-    height:29px;
-    min-height:29px!important;
-    line-height: 18px!important;
-    overflow:hidden!important;
-}
-.emoji-wysiwyg-editor img{
-    transform:scale(.7);
-    margin: -4px 0 0 0!important;
-    }
-.emoji-picker-icon{
-    right:auto!important;
-    left:30px!important;
-    top:5px!important;
-}
-
-.fa-smile-o{
-	width: 20px;
-    height: 20px;
-    z-index: 20;
-    cursor: pointer;
-    background: url(../images/smile.png) center center no-repeat;
-}
-
-.fa-smile-o:before{
-    content:none!important
-}

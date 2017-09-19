@@ -5,8 +5,6 @@
 
     var logging = false;
 
-    var textFormId;
-
 	if (typeof SERVICE_PATTERN_CHAT_CONFIG !== 'undefined')  {		
 		if (typeof SERVICE_PATTERN_CHAT_CONFIG.$ !== 'undefined') {
 			$ = SERVICE_PATTERN_CHAT_CONFIG.$;
@@ -235,9 +233,6 @@
                     break;
 
                 case 'chat_session_form_show':
-                    if(msg.form_name === '') {
-                        textFormId = msg.form_request_id;
-                    }
                     o.uiCallbacks.onFormShow(msg);
                     break;
 
@@ -312,14 +307,6 @@
                 msg: msg
             };
             o.uiCallbacks.onLogEvent(prepareLogEvent(m));
-
-            if(textFormId) {
-                var data = {};
-                data.text = msg;
-                o.sendFormData(textFormId, "", data);
-                textFormId = undefined;
-            }
-
             sendEvent({event: 'chat_session_message', msg: msg, msg_id: '' + o.msgId});
             o.msgId = o.msgId + 2;
         };
@@ -347,8 +334,8 @@
             o.uiCallbacks.onFormSent();
         };
         
-        o.sendTyping = function(message) {
-            sendEvent({event: 'chat_session_typing', msg: message});
+        o.sendTyping = function() {
+            sendEvent({event: 'chat_session_typing'});
         };
         
         o.sendNotTyping = function() {
@@ -669,25 +656,10 @@
         });
     };
 
-    var checkSessionExists = function(cp, sessionId) {
-        var historyEndpoint = 'chats/' + sessionId + '/history?tenantUrl=' + encodeURIComponent(cp.tenantUrl);
-        return sendXhr(cp, historyEndpoint, "GET");
-    };
-
-    var buildSessionFromSessionId = function(cp, id, state) {
-        var r = {};
-        r.chat_id = id;
-        r.state = state;
-        r.session = createSessionHandler(cp, r);
-        return r;
-    };
-
     $.chat = {
         createSession: createSession,
         checkAvailability: checkAvailability,
         getActiveChats: getActiveChats,
-        checkSessionExists: checkSessionExists,
-        buildSessionFromSessionId: buildSessionFromSessionId,
         getExpectedParameters: getExpectedParameters,
         uploadFiles: uploadFiles
     }

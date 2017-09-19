@@ -96,18 +96,19 @@ var appendLog = function(event) {
 };
 
 var typingTimer;
-var msgTypingInterval;
 var notTypingTimeout = 30;
-var msgTypingTimeout = 3;
     
 var sendMessage = function(session) {    
-    if ($('#input-field').val() || $('.emoji-wysiwyg-editor').html()) {
+    if ($('#input-field').val()) {
         session.send($('#input-field').val());
         $('#input-field').val('');
-        $('.emoji-wysiwyg-editor').html('');
-        autosize.update($('#input-field,.emoji-wysiwyg-editor'));
+        autosize.update($('#input-field'));
 
-        notTyping(session);
+        if (typingTimer) {
+            window.clearTimeout(typingTimer);
+            session.sendNotTyping();
+            typingTimer = null;
+        }
     }
 };
 
@@ -125,28 +126,20 @@ var sendNavigation = function(session, href, title) {
 };
 
 
-var notTyping = function(session) {
-    if (typingTimer) {
-        window.clearInterval(msgTypingInterval);
-        window.clearTimeout(typingTimer);
-        msgTypingInterval = null;
+    var notTyping = function(session) {
         session.sendNotTyping();
         typingTimer = null;
-    }
-};
+    };
     
-    
-var chatMessageTyping = function(session, msg) {
+var chatMessageTyping = function(session) {
     if (typingTimer) {
         window.clearTimeout(typingTimer);
     } else {
-        session.sendTyping(msg);
-        msgTypingInterval = window.setInterval(function() {
-            session.sendTyping($('#input-field').val());
-        }, msgTypingTimeout * 1000);
+        session.sendTyping();
     }
     typingTimer = window.setTimeout(function() {
-        notTyping(session);
+        session.sendNotTyping();
+        typingTimer = null;
     }, notTypingTimeout * 1000);
 };
 
@@ -158,10 +151,9 @@ var msgKeyPress = function(event, session) {
             event.preventDefault();
             event.stopImmediatePropagation();
             sendMessage(session);
-            $('.emoji-wysiwyg-editor').html('');
         } else {
             var chatLog = $('#chatLog'); 
-            var msg = $('#input-field,.emoji-wysiwyg-editor');
+            var msg = $('#input-field');
             var scroll1 = msg.scrollTop();
             setTimeout(function() {
                 var scroll2 = msg.scrollTop();
