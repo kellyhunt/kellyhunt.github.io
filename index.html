@@ -1,46 +1,113 @@
+!DOCTYPE html>
+<html>
 
-<!-- You have to put this piece of JavaScript code into your web page
-Note: Use <!DOCTYPE html> on the page where snippet located for better rendering
--->
-
+<head>
+<script type="text/javascript" src="https://new.brightpattern.com/agentdesktop/app/lib/servicepatternapi-dev.js"></script>
 <script type="text/javascript">
-    SERVICE_PATTERN_CHAT_CONFIG = {
-        appId: '365949df02f44137964af44b10a39b60',
-        clientId: 'WebChat',
-        apiUrl: 'https://epoch.brightpattern.com:443/clientweb/api/v1',
-        tenantUrl: 'epoch.brightpattern.com',
-        width: 300,
-		chatPath: 'https://kellyhunt.github.io/',
-        hidden: true,
-        sound_notification: false,
-        logging: false,
-        sound_notification_file: 'https://epoch.brightpattern.com:443/clientweb/chat-client-v2/media/ding.mp3',
 
-        /* Default customer data, it can be collected on current site's context*/
-        /* Customer data also can be requested via "Request Input" block + "MobileChatCustomerData" formName */
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
 
 
-     pages: [
-	 "https://google.com",
-	 "https://dl.dropboxusercontent.com/s/b0z5hdy73odkqjm/new_chat1.html"
-        ]
- 
- /*        first_name: '',
-         last_name: '',
-         email: '',
-         account_number: '',
-         phone_number: '', 
-         location : {
-             latitude: 37.5151481,
-             longitude: -122.4183997
-         }
- */
-    };
+    var startRecording = function() {
+        window.bpspat.api.startCurrentCallRecording();
+    }
+    var stopRecording = function() {
+        window.bpspat.api.stopCurrentCallRecording();
+    }
+
+
+
+    var dialNumber = function() {
+        window.bpspat.api.dialNumber("3008");
+    }
+	var setNotes = function() {
+        window.bpspat.api.setNotes("Test notes");
+    }
+	var setDisposition = function() {
+        window.bpspat.api.setDisposition("1001");
+    }
+	var completeInteraction = function() {
+        window.bpspat.api.completeInteraction();
+    }
+	var completeInteractionWithDisp = function() {
+        window.bpspat.api.completeInteractionWithDisp("1001","Test notes");
+    }
+
+	// call recordings
+
+	function callback(data) {
+		alert(data)
+    	//alert(data.item_id + "|" + data.recording + "|" + data.muted)
+	}
+
+
+	var getCallRecordingStatus = function() {
+		window.bpspat.api.getCallRecordingStatus(callback)
+	}
+	var startCallRecording = function() {
+		window.bpspat.api.startCallRecording(callback)
+	}
+	var stopCallRecording = function() {
+		window.bpspat.api.stopCallRecording(callback)
+	}
+	var muteCallRecording = function() {
+		window.bpspat.api.muteCallRecording(callback)
+	}
+	var unmuteCallRecording = function() {
+		window.bpspat.api.unmuteCallRecording(callback)
+	}
+
 </script>
+</head>
 
-<script type="text/javascript" src="https://kellyhunt.github.io/js/snippet.js"></script>
+<body>
 
-<button onClick="window.openChat(true);" type="button">Chat With Me!</button>
-<br>
-<br>
-<u onClick="window.openChat(true);">Click Here to Chat</u>
+
+<h1> Test </h1>
+    <div>Interaction:<span id="interaction_id"/></div>
+    <div>Agent:<span id="agent_id"/></div>
+    <div>Service:<span id="service_name"/></div>
+    <div>ANI:<span id="ani"/></div>
+    
+	<script>
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+	document.getElementById("interaction_id").innerHTML = getParameterByName('interaction_id');
+	document.getElementById("agent_id").innerHTML = getParameterByName('agent_id');
+	document.getElementById("service_name").innerHTML = getParameterByName('service_name');
+	document.getElementById("ani").innerHTML = getParameterByName('ani');
+	</script>
+
+<div><button id="stopRecording" onclick="stopCallRecording()">Stop Recording</button></div>
+<div><button id="startRecording" onclick="startCallRecording()">Start Recording</button></div>
+
+<div><button id="dialNumber" onclick="dialNumber()">Dial Number</button></div>
+<div><button id="setNotes" onclick="setNotes()">Set Notes</button>	</div>
+<div><button id="setDisposition" onclick="setDisposition()">Set Disposition</button>	</div>
+<div><button id="completeInteraction" onclick="completeInteraction()">Complete Interaction</button>	</div>
+<div><button id="completeInteractionWithDisp" onclick="completeInteractionWithDisp()">Complete Interaction With Disposition</button></div>
+
+
+<div><button id="getCallRecordingStatus" onclick="getCallRecordingStatus()">getCallRecordingStatus</button></div>
+<div><button id="startCallRecording" onclick="startCallRecording()">startCallRecording</button>	</div>
+<div><button id="stopCallRecording" onclick="stopCallRecording()">stopCallRecording</button>	</div>
+<div><button id="muteCallRecording" onclick="muteCallRecording()">muteCallRecording</button>	</div>
+<div><button id="unmuteCallRecording" onclick="unmuteCallRecording()">unmuteCallRecording</button></div>
+
+
+<div><button id="oneStepTransfer" onclick="oneStepTransfer()">oneStepTransfer</button>	</div>
+<div><button id="oneStepConference" onclick="oneStepConference()">oneStepConference</button>	</div>
+<div><button id="setService" onclick="setService()">setService</button>	</div>
+
+</body>
+
+</html>
