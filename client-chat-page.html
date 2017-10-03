@@ -678,6 +678,10 @@
         $('#last_name').bind('focus', function() {
             $('#error-last_name').css("display", "none");
         });
+        
+      $('#account_number').bind('focus', function() {
+            $('#error-account_number').css("display", "none");
+        });
 
         $('#email').bind('focus', function() {
             $('#error-phone').css("display", "none");
@@ -745,6 +749,10 @@
             }
             if(extChatData.last_name === undefined || extChatData.last_name === '') {
                 $('#error-last_name').css("display", "block");
+                noError = false;
+            }
+                if(extChatData.account_number === undefined || extChatData.account_number === '') {
+                $('#error-account_number').css("display", "block");
                 noError = false;
             }
             if(extChatData.email === undefined || extChatData.email === '') {
