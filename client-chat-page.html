@@ -751,10 +751,10 @@
                 $('#error-phone').css("display", "block");
                 noError = false;
             }
-            /*if(extChatData.question === undefined || extChatData.question === '') {
+            if(extChatData.question === undefined || extChatData.question === '') {
                 $('#error-message').css("display", "block");
                 noError = false;
-            }*/
+            }
 
             if(noError) {
                 window.chatSession.sendFormData(currentFormRequestId, currentFormName, extChatData);
