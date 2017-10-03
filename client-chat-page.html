@@ -683,9 +683,7 @@
             $('#error-phone').css("display", "none");
         });
 
-        $('#account_number').bind('focus', function() {
-            $('#error-account_number').css("display", "none");
-        });
+      
 
         $('#question').bind('focus', function() {
             $('#error-message').css("display", "none");
@@ -745,10 +743,6 @@
 
             if(extChatData.first_name === undefined || extChatData.first_name === '') {
                 $('#error-first_name').css("display", "block");
-                noError = false;
-            }
-            if(extChatData.account_number === undefined || extChatData.account_number === '') {
-                $('#error-account_number').css("display", "block");
                 noError = false;
             }
             if(extChatData.last_name === undefined || extChatData.last_name === '') {
