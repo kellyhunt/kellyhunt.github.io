@@ -606,7 +606,7 @@
 
         cp.parameters = {};
         cp.parameters.email            = cp.email;
-    
+        cp.parameters.last_name        = cp.last_name;
         cp.parameters.first_name       = cp.first_name;
         cp.parameters.account_number   = cp.account_number;
         cp.parameters.logging          = cp.logging;
@@ -675,9 +675,9 @@
             $('#error-first_name').css("display", "none");
         });
 
-        /*$('#last_name').bind('focus', function() {
+        $('#last_name').bind('focus', function() {
             $('#error-last_name').css("display", "none");
-        });*/
+        });
 
         $('#email').bind('focus', function() {
             $('#error-phone').css("display", "none");
@@ -732,7 +732,7 @@
             extChatData = {
                 question:       $('#question').val(),
                 first_name:     $('#first_name').val(),
-                /*last_name:      $('#last_name').val()*/,
+                last_name:      $('#last_name').val(),
                 account_number: $('#account_number').val(),
                 email:          $('#email').val()
             };
@@ -743,10 +743,10 @@
                 $('#error-first_name').css("display", "block");
                 noError = false;
             }
-            /*if(extChatData.last_name === undefined || extChatData.last_name === '') {
+            if(extChatData.last_name === undefined || extChatData.last_name === '') {
                 $('#error-last_name').css("display", "block");
                 noError = false;
-            }*/
+            }
             if(extChatData.email === undefined || extChatData.email === '') {
                 $('#error-phone').css("display", "block");
                 noError = false;
@@ -831,7 +831,10 @@
                     <div id="error-first_name" class="error-balloon">Please, enter first name</div>
                 </div>
 
-        
+                <div class="field-wrapper">
+                    <input id="last_name" type="text" class="input-field" name="last_name" placeholder="Last name*" value="">
+                    <div id="error-last_name" class="error-balloon">Please, enter last name</div>
+                </div>
 
                 <div class="field-wrapper">
                     <input id="account_number" type="text" class="input-field" placeholder="Mastercode*" value="">
