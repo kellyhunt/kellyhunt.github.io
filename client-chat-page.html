@@ -751,10 +751,10 @@
                 $('#error-phone').css("display", "block");
                 noError = false;
             }
-            if(extChatData.question === undefined || extChatData.question === '') {
+           /* if(extChatData.question === undefined || extChatData.question === '') {
                 $('#error-message').css("display", "block");
                 noError = false;
-            }
+            }*/
 
             if(noError) {
                 window.chatSession.sendFormData(currentFormRequestId, currentFormName, extChatData);
@@ -847,7 +847,7 @@
                 </div>
 
                 <div class="field-wrapper message">
-                    <textarea id="question" class="input-field" placeholder="Your message*"></textarea>
+                    <textarea id="question" class="input-field" placeholder="Your message"></textarea>
                     <div id="error-message" class="error-balloon multiline">Please, enter message</div>
                 </div>
 
