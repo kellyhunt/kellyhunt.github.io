@@ -94,7 +94,9 @@
             });
         }
     };
-window.openChat = openChat;  
+
+	window.openChat = openChat; 
+
     var keepOpenedState = function(opened) {
         if(opened) {
             window.sessionStorage.setItem("sp-chat-snippet", "true");

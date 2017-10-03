@@ -22,7 +22,7 @@
 <script type="text/javascript" src="js/jquery-ui-1.11.1.min.js"></script>
 <script type="text/javascript" src="js/client-chat-ui.js"></script>
 <script type="text/javascript" src="js/autosize.min.js"></script>
-<script type="text/javascript"> (function(){    
+<script type="text/javascript"> (function(){
 
     var cp = {};
     var currentFormName = '';
@@ -105,7 +105,7 @@
                 window.chatSession.send("Click to start co-browsing session:" + data.replace("sp-together-url", ""));
             } else if(data == "sp-started-together") {
             	$('#shareScreen').addClass('stop-sharing');
-            } else if(data == "sp-stopped-together") {            	
+            } else if(data == "sp-stopped-together") {
             	$('#shareScreen').removeClass('stop-sharing');
             }
         }
@@ -242,7 +242,7 @@
                 $('#chat-body').css("display", "block");
                 $('#callme').css("display", (window.mozRTCPeerConnection || window.webkitRTCPeerConnection) ? "block" : "none");
                 $('#callme').removeClass('hang-up');
-                if (getUrlVars(window.location.href)['togetherJS_enabled'] == 'true') {         
+                if (getUrlVars(window.location.href)['togetherJS_enabled'] == 'true') {
                 	$('#shareScreen').css("display", "block");
                 }
                 $('#endChat').css("display", "block");
@@ -256,7 +256,7 @@
                 $('#messages-div-outer').perfectScrollbar({useBothWheelAxes: false});
 
                 window.parent.postMessage("sp-get-status-together", "*");
-                
+
                 if (window.chatSession) {
 
                     window.parent.postMessage("sp-session-start", "*");//request web notifications
@@ -318,7 +318,7 @@
                 $('#chat-body').css("display", "none");
                 $('#video').css("display", "none");
                 $('#servicepattern-chat').css('top', '0');
-            /*    $('#callme').css("display", "none");  */
+                $('#callme').css("display", "none");
                 $('#shareScreen').css("display", "none");
                 $('#agent-title').text("");
                 $('.avatar-image').attr("src", 'images/logo-big.png');
@@ -500,7 +500,7 @@
                         o.session.getHistory();
                     }
                     window.chatSession = o.session;
-                    var urlVars = getUrlVars(window.location.href); 
+                    var urlVars = getUrlVars(window.location.href);
                     $.chatUI.sendNavigation(o.session, urlVars['referrer'], urlVars['referrerTitle']);
                 });
     };
@@ -683,6 +683,10 @@
             $('#error-phone').css("display", "none");
         });
 
+        $('#account_number').bind('focus', function() {
+            $('#error-account_number').css("display", "none");
+        });
+
         $('#question').bind('focus', function() {
             $('#error-message').css("display", "none");
         });
@@ -718,7 +722,7 @@
                 window.parent.postMessage("sp-start-together", "*");
             }
         });
-       
+
 
         $('#requestAudio').bind('click', function() {
             if(window.chatSession.internalParty) {
@@ -743,6 +747,10 @@
                 $('#error-first_name').css("display", "block");
                 noError = false;
             }
+            if(extChatData.account_number === undefined || extChatData.account_number === '') {
+                $('#error-account_number').css("display", "block");
+                noError = false;
+            }
             if(extChatData.last_name === undefined || extChatData.last_name === '') {
                 $('#error-last_name').css("display", "block");
                 noError = false;
@@ -751,10 +759,10 @@
                 $('#error-phone').css("display", "block");
                 noError = false;
             }
-            if(extChatData.question === undefined || extChatData.question === '') {
-                $('#error-message').css("display", "block");
-                noError = false;
-            }
+            // if(extChatData.question === undefined || extChatData.question === '') {
+            //    $('#error-message').css("display", "block");
+            //    noError = false;
+            // }
 
             if(noError) {
                 window.chatSession.sendFormData(currentFormRequestId, currentFormName, extChatData);
@@ -770,10 +778,10 @@
             $('#attach-file').click();
         });
     });
-})();    
-</script>    
+})();
+</script>
 </head>
-        
+
 <body id="inner-chat">
 
 <div id="web_phone" class="phone_hidden">
@@ -800,10 +808,6 @@
                 <div class="avatar">
                     <img class="avatar-image" src="images/logo-big.png">
                 </div>
-                <div class="info">
-                    <div id="agent-name" class="agent-name">New Chat</div>
-                    <div id="agent-title" class="title" style="width: 100%;"></div>
-                </div>
             </div>
         </div>
         <div class="clear"></div>
@@ -828,23 +832,22 @@
 
                 <div class="field-wrapper">
                     <input id="first_name" type="text" class="input-field" name="first_name" placeholder="Full name*" value="">
-                    <div id="error-first_name" class="error-balloon">Please, enter your full name</div>
-                </div>
-
-    
-                <div class="field-wrapper">
-                    <input id="account_number" type="text" class="input-field" placeholder="Your Mastercode" value="">
-                    <div id="error-account_number" class="error-balloon">Please, enter your mastercode</div>
+                    <div id="error-first_name" class="error-balloon">Please enter your full name</div>
                 </div>
 
                 <div class="field-wrapper">
-                    <input id="email" type="text" class="input-field" placeholder="Your email*" value="">
-                    <div id="error-phone" class="error-balloon">Please, enter valid email</div>
+                    <input id="email" type="text" class="input-field" placeholder="Email Address*" value="">
+                    <div id="error-phone" class="error-balloon">Please enter email address on record</div>
+                </div>
+
+                <div class="field-wrapper">
+                    <input id="account_number" type="text" class="input-field" placeholder="Mastercode*" value="">
+                    <div id="error-account_number" class="error-balloon">Please enter your Mastercode</div>
                 </div>
 
                 <div class="field-wrapper message">
-                    <textarea id="question" class="input-field" placeholder="Your message*"></textarea>
-                    <div id="error-message" class="error-balloon multiline">Please, enter message</div>
+                    <textarea id="question" class="input-field" placeholder="Your message"></textarea>
+                    <div id="error-message" class="error-balloon multiline">Please enter your message</div>
                 </div>
 
                 <div class="buttons">
@@ -966,7 +969,7 @@
 
         <div id="input-div" class="">
             <div class="input-div-table">
-                <div id="attachFile"></div>				
+                <div id="attachFile"></div>
                 <div class="td-textarea">
                     <textarea id="input-field" rows="1" name="input-field" maxlength="1000" placeholder="Type here and hit <Enter>" autocomplete="off" style="resize: none;"></textarea>
                 </div>

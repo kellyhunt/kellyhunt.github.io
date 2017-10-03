@@ -831,7 +831,6 @@ a.servicepatternBtn.cancel {
 
 #header-avatar .avatar img {
     margin-right: 10px;
-    width: 40px;
     height: 40px;
     float: none;
     margin-left: 3px;
@@ -1915,7 +1914,7 @@ div.buttons.single .left-button {
 }
 
 #inner-chat.mobile-version #callme div {
-	background-size: 25px 25px; 
+	background-size: 25px 25px;
 }
 
 
