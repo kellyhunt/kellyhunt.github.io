@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<!-- ___PRODUCT_BUILD___ (___PRODUCT_COMMENTS___) ___PRODUCT_DATE___ -->
+
+<html>
+<head>
+    <title>Chat Test Page</title>
+</head>
+<body>
+
+<!-- You have to put this piece of JavaScript code into your web page -->
+
+<script type="text/javascript">
+    SERVICE_PATTERN_CHAT_CONFIG = {
+        appId: '365949df02f44137964af44b10a39b60',
+        clientId: 'WebChat',
+        apiUrl: 'https://officesupply.brightpattern.com:443/clientweb/api/v1',
+        tenantUrl: 'officesupply.brightpattern.com',
+        width: 300,
+		/* chatPath: 'https://epoch.brightpattern.com:443/clientweb/chat-client-v2/', */
+		chatPath: 'https://officesupply.brightpattern.com:443/clientweb/chat-client-v2/',
+        hidden: true,
+        /* DF sound_notification: false, */
+        sound_notification: true,
+        /* DF logging: false, */
+        logging: true,
+        sound_notification_file: 'https://officesupply.brightpattern.com:443/clientweb/chat-client-v2/media/ding.mp3',
+
+        /* Default customer data, it can be collected on current site's context*/
+        /* Customer data also can be requested via "Request Input" block + "MobileChatCustomerData" formName */
+
+
+     pages: [
+	 "https://google.com"
+        ]
+/*
+        togetherJS_enabled : true,
+        first_name: '',
+        last_name: '',
+        from: '',
+        email: '',
+        account_number: '',
+        phone_number: 91001,
+        location : {
+            latitude: 37.5151481,
+            longitude: -122.4183997
+        }
+*/
+
+    };
+</script>
+<script type="text/javascript" src="https://officesupply.brightpattern.com:443/clientweb/chat-client-v2/js/snippet.js"></script>
+
+<button onClick="window.openChat(true);" type="button">Chat With Me!</button>
+<br>
+<br>
+</body>
+</html>
