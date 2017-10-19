@@ -22,7 +22,7 @@ window.onload = function() {
     function BPdial()
     {
       targetWindow = window.opener || window.parent;
-      var request = { command: 'DIAL_NUMBER',number: "15555555555", item_id :sessionId };
+      var request = { command: 'DIAL_NUMBER',number: "17193308659", item_id :sessionId };
       targetWindow.postMessage(JSON.stringify(request), bpspatOrigin);
     }
 
