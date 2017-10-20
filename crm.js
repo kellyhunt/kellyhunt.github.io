@@ -5,7 +5,7 @@ window.onload = function() {
     function BPdial()
     {
       targetWindow = window.opener || window.parent;
-      var request = { command: 'DIAL_NUMBER',number: "17193308659" };
+      var request = { command: 'DIAL_NUMBER',number: "9,,17193308659" };
       targetWindow.postMessage(JSON.stringify(request),'*');
     }
 
