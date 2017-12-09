@@ -1,46 +1,24 @@
-
-<!DOCTYPE html>
-<html>
-<head>
-<style>
-div#sp-chat-frame {width: 400px;}
-div#sp-root-container {margin-left: 40% !important;}
-</style>
-</head>
-<body style="background-image: url('bp.png'); background-size: 100%;">
-
+<!-- You have to put this piece of JavaScript code into your web page
+Note: Use <!DOCTYPE html> on the page where snippet located for better rendering
+-->
+<link type="text/css" rel="stylesheet" href="https://delta.brightpattern.com/clientweb/chat-client-v4/css/form.css">
 <script type="text/javascript">
     SERVICE_PATTERN_CHAT_CONFIG = {
-        appId: '7a1e1fd31c5344dca207ee09f02d1cbc',
-        clientId: 'WebChat',
-        apiUrl: 'https://delta.brightpattern.com:443/clientweb/api/v1',
+        appId: 'eea57cc6d9274b1ba72f22bb7b1a35a4',
+        apiUrl: 'https://delta.brightpattern.com/clientweb/api/v1',
         tenantUrl: 'delta.brightpattern.com',
-        width: 640,
-	togetherJS_enabled : true,
-        chatPath: 'https://delta.brightpattern.com:443/clientweb/chat-client-v2/',
-        callback: false,
-        hidden: false,
-        subject: '',
-        sound_notification: false,
-        logging: false,
-        sound_notification_file: 'https://delta.brightpattern.com:443/clientweb/chat-client-v2/media/ding.mp3',
+        chatPath: 'https://delta.brightpattern.com/clientweb/chat-client-v4/'
 
-        /* Default customer data, it can be collected on current site's context*/
-        /* Customer data also can be requested via "Request Input" block + "MobileChatCustomerData" formName */
-
+        /*        
+         // Default customer data, it can be collected on current site's context
          first_name: '',
          last_name: '',
          email: '',
-         account_number: '',
-         phone_number: '',
-         location : {
-             latitude: 37.5151481,
-             longitude: -122.4183997
-         }
+         phone_number: ''
+ 		*/
     };
 </script>
-
-<script type="text/javascript" src="https://delta.brightpattern.com:443/clientweb/chat-client-v2/js/snippet.js"></script>
+<script src="https://delta.brightpattern.com/clientweb/chat-client-v4/js/init.js"></script> 
 
 <script type="text/javascript">
 	function getUrlParameter(name) {
