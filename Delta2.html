@@ -7,8 +7,9 @@ Note: Use <!DOCTYPE html> on the page where snippet located for better rendering
         appId: 'e77b3b39eaf043e6b39603f9f29eaf7b',
         apiUrl: 'https://delta.brightpattern.com/clientweb/api/v1',
         tenantUrl: 'delta.brightpattern.com',
-        chatPath: 'https://delta.brightpattern.com/clientweb/chat-client-v4/'
-
+        chatPath: 'https://delta.brightpattern.com/clientweb/chat-client-v4/',
+        parameters: {}
+        
         /*        
          // Default customer data, it can be collected on current site's context
          first_name: '',
@@ -29,6 +30,7 @@ Note: Use <!DOCTYPE html> on the page where snippet located for better rendering
 
 	var bp_session_id=getUrlParameter("session");
 	SERVICE_PATTERN_CHAT_CONFIG['account_number']=bp_session_id;
+	SERVICE_PATTERN_CHAT_CONFIG['parameters']['ZingtreeSessionID']=bp_session_id;
 
 	// get zingtree form & session data
 	var xmlhttp = new XMLHttpRequest();
