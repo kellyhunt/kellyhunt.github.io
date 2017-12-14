@@ -1,6 +1,3 @@
-<!-- You have to put this piece of JavaScript code into your web page
-Note: Use <!DOCTYPE html> on the page where snippet located for better rendering
--->
 <link type="text/css" rel="stylesheet" href="https://delta.brightpattern.com/clientweb/chat-client-v4/css/form.css">
 <script type="text/javascript">
     SERVICE_PATTERN_CHAT_CONFIG = {
@@ -11,37 +8,23 @@ Note: Use <!DOCTYPE html> on the page where snippet located for better rendering
         tenantUrl: 'delta.brightpattern.com',
         chatPath: 'https://delta.brightpattern.com/clientweb/chat-client-v4/',
         parameters: {}
-        
-        /*        
-         // Default customer data, it can be collected on current site's context
-         first_name: '',
-         last_name: '',
-         email: '',
-         phone_number: ''
- 		*/
     };
-</script>
-<script src="https://delta.brightpattern.com/clientweb/chat-client-v4/js/init.js"></script> 
-<script type="text/javascript">
 	function getUrlParameter(name) {
 		name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
 		var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
 		var results = regex.exec(location.search);
 		return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 	}
-
 	var bp_session_id=getUrlParameter("session");
 	SERVICE_PATTERN_CHAT_CONFIG['account_number']=bp_session_id;
 	SERVICE_PATTERN_CHAT_CONFIG['parameters']['ZingtreeSessionID']=bp_session_id;
-
-
-
+</script>
+<script src="https://delta.brightpattern.com/clientweb/chat-client-v4/js/init.js"></script> 
+<script type="text/javascript">
 	// auto-click the chat tab
 	document.addEventListener("DOMContentLoaded", function(event) { 
 		setTimeout(function(){ document.getElementById('sp-chat-label-text').click();}, 12000);
 	});
 </script>
-
- </body>
- 
- </html>
+</body>
+</html>
