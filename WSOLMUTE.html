@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script type="text/javascript" src="https://sylvan.brightpattern.com/agentdesktop/libs/servicepatternapi-dev.js"></script>
+<script type="text/javascript">
+
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+
+    var startRecording = function() {
+        window.bpspat.api.startCurrentCallRecording();
+    }
+    var stopRecording = function() {
+        window.bpspat.api.stopCurrentCallRecording();
+    }
+
+
+
+    var dialNumber = function() {
+        window.bpspat.api.dialNumber("18017170288");
+    }
+	var setNotes = function() {
+        window.bpspat.api.setNotes("Test notes");
+    }
+	var setDisposition = function() {
+        window.bpspat.api.setDisposition("1001");
+    }
+	var completeInteraction = function() {
+        window.bpspat.api.completeInteraction();
+    }
+	var completeInteractionWithDisp = function() {
+        window.bpspat.api.completeInteractionWithDisp("1001");
+    }
+
+	// call recordings
+
+	function callback(data) {
+		alert(data)
+    	//alert(data.item_id + "|" + data.recording + "|" + data.muted)
+	}
+
+
+	var getCallRecordingStatus = function() {
+		window.bpspat.api.getCallRecordingStatus(callback)
+	}
+	var startCallRecording = function() {
+		window.bpspat.api.startCallRecording(callback)
+	}
+	var stopCallRecording = function() {
+		window.bpspat.api.stopCallRecording(callback)
+	}
+	var muteCallRecording = function() {
+		window.bpspat.api.muteCallRecording(callback)
+	}
+	var unmuteCallRecording = function() {
+		window.bpspat.api.unmuteCallRecording(callback)
+	}
+
+</script>
+</head>
+
+<body>
+
+
+<h1> Test </h1>
+    <div>Interaction:<span id="interaction_id"/></div>
+    <div>Agent:<span id="agent_id"/></div>
+    <div>Service:<span id="service_name"/></div>
+    <div>ANI:<span id="ani"/></div>
+    
+	<script>
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+	document.getElementById("interaction_id").innerHTML = getParameterByName('interaction_id');
+	document.getElementById("agent_id").innerHTML = getParameterByName('agent_id');
+	document.getElementById("service_name").innerHTML = getParameterByName('service_name');
+	document.getElementById("ani").innerHTML = getParameterByName('ani');
+	</script>
+
+<div><button id="stopRecording" onclick="stopCallRecording()">Stop Recording</button></div>
+<div><button id="startRecording" onclick="startCallRecording()">Start Recording</button></div>
+
+<div><button id="dialNumber" onclick="dialNumber()">Dial Number</button></div>
+<div><button id="setNotes" onclick="setNotes()">Set Notes</button>	</div>
+<div><button id="setDisposition" onclick="setDisposition()">Set Disposition</button>	</div>
+<div><button id="completeInteraction" onclick="completeInteraction()">Complete Interaction</button>	</div>
+<div><button id="completeInteractionWithDisp" onclick="completeInteractionWithDisp()">Complete Interaction With Disposition</button></div>
+
+
+<div><button id="getCallRecordingStatus" onclick="getCallRecordingStatus()">getCallRecordingStatus</button></div>
+<div><button id="startCallRecording" onclick="startCallRecording()">startCallRecording</button>	</div>
+<div><button id="stopCallRecording" onclick="stopCallRecording()">stopCallRecording</button>	</div>
+<div><button id="muteCallRecording" onclick="muteCallRecording()">muteCallRecording</button>	</div>
+<div><button id="unmuteCallRecording" onclick="unmuteCallRecording()">unmuteCallRecording</button></div>
+
+
+<div><button id="oneStepTransfer" onclick="oneStepTransfer()">oneStepTransfer</button>	</div>
+<div><button id="oneStepConference" onclick="oneStepConference()">oneStepConference</button>	</div>
+<div><button id="setService" onclick="setService()">setService</button>	</div>
+
+
+<!-- You have to put this piece of JavaScript code into your web page
+Note: Use <!DOCTYPE html> on the page where snippet located for better rendering
+-->
+<!-- You have to put this piece of JavaScript code into your web page
+Note: Use <!DOCTYPE html> on the page where snippet located for better rendering
+-->
+<link type="text/css" rel="stylesheet" href="https://supporttest.brightpattern.com/clientweb/chat-client-v4/css/form.css">
+<script type="text/javascript">
+    SERVICE_PATTERN_CHAT_CONFIG = {
+        appId: '7a48336c8da043f0b393b5f84c63efe3',
+        apiUrl: 'https://supporttest.brightpattern.com/clientweb/api/v1',
+        tenantUrl: 'supporttest.brightpattern.com',
+        chatPath: 'https://supporttest.brightpattern.com/clientweb/chat-client-v4/'
+    };
+</script>
+
+<script src="https://supporttest.brightpattern.com/clientweb/chat-client-v4/js/init.js"></script> 
+ <div class="sp-callback-form" id="sp-callback-form" class="sp-callback-form">
+   <label>Request a callback</label>
+   <label>&nbsp;</label>
+   <label>Name:</label>
+   <input type="text" id="sp-callback-name" placeholder="Name" />
+   <label>Phone:</label>
+   <input type="tel" id="sp-callback-phone_number" placeholder="Phone" />
+   <button id="sp-callback-submit">Request Call</button>
+</div>
+
+
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3102.7306319443137!2d-104.60065904903787!3d38.952981751170476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x871336edbacc6af7%3A0xf30bd9b81a792f6f!2s8361+Del+Rio+Rd%2C+Peyton%2C+CO+80831!5e0!3m2!1sen!2sus!4v1520009378533" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+</body>
+
+</html>
