@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+  <script>
+var data = "client_id=listaccess&client_secret=tHu0Ny70gn0I0TfXRagErOUHVFQ20dG7qh0vi27cSF5tornUvSBaseoz0ngdy0Y6&grant_type=client_credentials&scope=sylvan.brightpattern.com";
+
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === 4) {
+    console.log(this.responseText);
+  }
+});
+
+xhr.open("POST", "https://sylvan.brightpattern.com:443/configapi/v2/oauth/token");
+xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+xhr.setRequestHeader("Cache-Control", "no-cache");
+xhr.setRequestHeader("Postman-Token", "42f5d593-f724-46a9-b312-29007b92a001");
+
+xhr.send(data);
+
+  </script>
+</body>
+</html>
