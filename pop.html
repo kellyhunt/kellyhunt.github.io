@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script language='javascript'>
+function getParameterByName(name, url){
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+function onload(){
+	var data = JSON.parse(getParameterByName('data'));
+	document.getElementById('venue_name').innerHTML = data.Name;
+	document.getElementById('address_1').innerHTML = data.Address1__c;
+	document.getElementById('city').innerHTML = data.City__c;
+	document.getElementById('state').innerHTML = data.State__c;
+	document.getElementById('phone').innerHTML = data.Phone__c;
+	document.getElementById('landmarks').innerHTML = data.Landmarks__c;
+	document.getElementById('parking').innerHTML = data.Parking__c;
+	document.getElementById('link').href = "http://your.salesforce.com"+data.attributes.url;
+}
+</script>
+</head>
+<body onload="onload()">
+<table style="padding: 10px;">
+	<tr>
+		<td>Venue</td><td><a id="link" href=""><div id="venue_name">div1</div></a></td>
+	</tr>
+	<tr>
+		<td>Addr 1</td><td id="address_1">div2</td>
+	</tr>
+	<tr>
+		<td>City, State</td><td><span id="city"></span>, <span id="state"></span></td>
+	</tr>
+	<tr>
+		<td>Phone</td><td id="phone"></td>
+	</tr>
+	<tr>
+		<td>Landmarks</td><td id="landmarks"></td>
+	</tr>
+	<tr>
+		<td>Parking</td><td id="parking"></td>
+	</tr>
+	</table>
+</body>
+</html>
+
